@@ -6,8 +6,9 @@ function readData(file, id) {
 }
 
 function processData(datum) {
+  // console.log(datum);
   const dataItem = {
-    year: parseFloat(datum.year) || 0.0,
+    year: parseFloat(datum.Year) || 0.0,
     avg: parseFloat(datum["J-D"]) || 0.0,
   };
 
@@ -37,8 +38,8 @@ function graph(data, id) {
     "#800026",
   ];
 
-  let stripeWidth = 4;
-  let stripeHeight = 300;
+  let stripeWidth = 5;
+  let stripeHeight = 500;
   // let land = d3.select(id);
   // let svg = land.append("svg");
   // svg.attr("width", stripeWidth * data.length);
@@ -56,6 +57,8 @@ function graph(data, id) {
     .attr("width", stripeWidth * data.length)
     .attr("height", stripeHeight);
 
+  let year = document.getElementById("years");
+
   let stripes = svg
     .selectAll("rect")
     .data(data)
@@ -65,5 +68,6 @@ function graph(data, id) {
     .attr("height", stripeHeight)
     .attr("x", (d, i) => i * stripeWidth)
     .attr("y", 0)
-    .style("fill", (d, i) => colors[Math.round(linearScaleForData(d.avg))]);
+    .style("fill", (d, i) => colors[Math.round(linearScaleForData(d.avg))])
+    .on("mouseover", (d) => (year.textContent = "Year is = " + d.year));
 }
